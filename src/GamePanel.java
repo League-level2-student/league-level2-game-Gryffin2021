@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	Font titleFont;
 	Font smallerFont;
 	Timer frameDraw; 
+	Player player = new Player(250, 700, 50, 50);
 	
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -25,15 +26,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		frameDraw.start();
 	}
 	
+	void updateMenuState() {  }
+	void updateGameState() {  }
+	void updateEndState()  {  }
+	
 	@Override
 	public void paintComponent(Graphics g){
 		if(currentState == MENU){
 			drawMenuState(g);
-		}//else if(currentState == GAME){
-			//drawGameState(g);
-		//}//else if(currentState == END){
-			//drawEndState(g);
-		//}
+		}else if(currentState == GAME){
+			drawGameState(g);
+		}else if(currentState == END){
+			drawEndState(g);
+		}
 	}
 	
 	void drawMenuState(Graphics g) {
@@ -41,16 +46,42 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		g.fillRect(0, 0, 1000, 1000);  
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
-		g.drawString("SUPER SHIP", 25, 200);
+		g.drawString("SUPER SHIP 199", 25, 200);
 		g.setFont(smallerFont);
 		g.drawString("Press ENTER to begin...", 178, 300);
 		g.drawString("Press SPACE for instructions", 163, 400);
 	}
-
+	void drawGameState(Graphics g) { player.draw(g); }
+	void drawEndState(Graphics g)  {  }
+	
+	 
+	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (arg0.getKeyCode()==KeyEvent.VK_ENTER) {
+		    if (currentState == END) {
+		        currentState = MENU;
+		    } else {
+		        currentState++;
+		    }
+		    if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+		        System.out.println("UP");
+		        player.up();
+		    }
+		    else if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
+		        System.out.println("DOWN");
+		        player.down();
+		    }
+		    else if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
+		        System.out.println("LEFT");
+		        player.left();
+		    }
+		    else if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
+		        System.out.println("RIGHT");
+		        player.right();
+		    }
+		}   
 	}
 
 	@Override
@@ -69,6 +100,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		repaint();
+		if(currentState == MENU){
+		    updateMenuState();
+		}else if(currentState == GAME){
+		    updateGameState();
+		}else if(currentState == END){
+		    updateEndState();
+		}
 	}
 
 }
