@@ -5,19 +5,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener{
+
+public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener{
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
 	int currentState = MENU;
+	int currentBoundsX;
+	int currentBoundsY;
+	bullet b = new bullet();
 	Font titleFont;
 	Font smallerFont;
 	Timer frameDraw; 
-	Player player = new Player(250, 700, 50, 50);
+	Player player = new Player(475, 500, 25, 25);
 	
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -65,24 +71,36 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    } else {
 		        currentState++;
 		    }
-		    if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+		}
+		    if(currentState == GAME) {
+		    if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
+		    	
 		        System.out.println("UP");
-		        player.up();
-		    }
-		    else if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
-		        System.out.println("DOWN");
+		        //if(player.y < currentBoundsY) {
 		        player.down();
+		        //}
+		    }
+		    else if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+		        System.out.println("DOWN");
+		        //if(player.y > currentBoundsY) {
+		        player.up();
+		        //}
 		    }
 		    else if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
 		        System.out.println("LEFT");
+		        //if(player.x > currentBoundsX) {
 		        player.left();
+		        //}
 		    }
 		    else if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
 		        System.out.println("RIGHT");
+		        //if(player.x < currentBoundsX) {
 		        player.right();
+		        //}
 		    }
-		}   
+		}
 	}
+	
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
@@ -107,6 +125,52 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}else if(currentState == END){
 		    updateEndState();
 		}
+	}
+	//@Override
+	/*public void mousePressed(MouseEvent e) {
+		System.out.println("a");
+		Projectile projectile = new Projectile(player.x, player.y);
+		projectile.x = player.x;
+		projectile.y = player.y;
+
+		int xdif = e.getX() - player.x;
+		int ydif = e.getY() - player.y;
+
+		double angle = Math.atan2((double) ydif, (double) xdif);
+
+		projectile.xSpeed = Math.cos(angle);
+		projectile.ySpeed = Math.sin(angle);
+		projectiles.add(projectile);
+	}*/
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

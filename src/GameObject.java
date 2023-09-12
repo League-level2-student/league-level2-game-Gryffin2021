@@ -4,7 +4,7 @@ public class GameObject {
 	int y;
 	int width;
 	int height;
-	int speed;
+	int speed = 0;
 	GameObject(int x, int y, int width, int height){
 		 this.x = x;
 		 this.y = y;
