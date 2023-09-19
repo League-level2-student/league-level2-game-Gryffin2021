@@ -17,6 +17,7 @@ public class SuperShip {
 	void setup() {
 		frame.add(panel);
 		frame.addKeyListener(panel);
+		frame.addMouseListener(panel);
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

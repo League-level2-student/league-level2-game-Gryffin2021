@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Font smallerFont;
 	Timer frameDraw; 
 	Player player = new Player(475, 500, 25, 25);
+	ObjectManager om = new ObjectManager(player);
 	
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -33,7 +34,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 	
 	void updateMenuState() {  }
-	void updateGameState() {  }
+	void updateGameState() {om.update();  
+	player.update();}
 	void updateEndState()  {  }
 	
 	@Override
@@ -57,7 +59,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.drawString("Press ENTER to begin...", 178, 300);
 		g.drawString("Press SPACE for instructions", 163, 400);
 	}
-	void drawGameState(Graphics g) { player.draw(g); }
+	void drawGameState(Graphics g) { player.draw(g);
+	om.draw(g);
+	}
 	void drawEndState(Graphics g)  {  }
 	
 	 
@@ -74,29 +78,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 		    if(currentState == GAME) {
 		    if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
-		    	
-		        System.out.println("UP");
-		        //if(player.y < currentBoundsY) {
-		        player.down();
-		        //}
+		    	player.down = true;
 		    }
-		    else if (arg0.getKeyCode()==KeyEvent.VK_UP) {
-		        System.out.println("DOWN");
-		        //if(player.y > currentBoundsY) {
+		    if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+		    	player.up = true;
 		        player.up();
-		        //}
 		    }
-		    else if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
+		    if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
 		        System.out.println("LEFT");
-		        //if(player.x > currentBoundsX) {
-		        player.left();
-		        //}
+		        player.left = true;
 		    }
-		    else if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
+		    if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
 		        System.out.println("RIGHT");
-		        //if(player.x < currentBoundsX) {
-		        player.right();
-		        //}
+		        player.right = true;
 		    }
 		}
 	}
@@ -105,7 +99,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
+	    	player.down = false;
+	    }
+	    if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+	    	player.up = false;
+	    }
+	    if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
+	        player.left = false;
+	    if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
+	        player.right = false;
+	    }
+	    }
 	}
 
 	@Override
@@ -127,8 +132,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}
 	}
 	//@Override
-	/*public void mousePressed(MouseEvent e) {
-		System.out.println("a");
+	//public void mousePressed(MouseEvent e) {
+		
+	//}
+		/*System.out.println("a");
 		Projectile projectile = new Projectile(player.x, player.y);
 		projectile.x = player.x;
 		projectile.y = player.y;
@@ -144,8 +151,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}*/
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void mouseClicked(MouseEvent arg0) {
 		
 	}
 
@@ -169,8 +175,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
+				
+				Projectile1 projectile = new Projectile1(player.x, player.y);
+				projectile.x = player.x;
+				projectile.y = player.y;
+
+				int xdif = e.getX() - player.x;
+				int ydif = e.getY() - player.y;
+
+				double angle = Math.atan2((double) ydif, (double) xdif);
+
+				projectile.xSpeed = Math.cos(angle);
+				projectile.ySpeed = Math.sin(angle);
+				om.addProjectile(projectile);
+			}
 	}
 
-}
+

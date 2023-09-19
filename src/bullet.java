@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class bullet extends GamePanel implements ActionListener {
+public class bullet implements ActionListener {
 	class Player {
 		public int x;
 		public int y;
@@ -56,8 +56,7 @@ public class bullet extends GamePanel implements ActionListener {
 		}
 		
 		public void update() {
-			x += xSpeed * maxSpeed;
-			y += ySpeed * maxSpeed;
+			
 		}
 	}
 
@@ -72,10 +71,10 @@ public class bullet extends GamePanel implements ActionListener {
 	public bullet() {
 		//error here
 		
-		//setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		//player = new Player();
-		//projectiles = new ArrayList<Projectile>();
-		//projectile = new Projectile(player.x, player.y);
+	
+		player = new Player();
+		projectiles = new ArrayList<Projectile>();
+		projectile = new Projectile(player.x, player.y);
 	}
 
 
