@@ -107,11 +107,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	    }
 	    if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
 	        player.left = false;
+	    }
 	    if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
 	        player.right = false;
 	    }
 	    }
-	}
+
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
