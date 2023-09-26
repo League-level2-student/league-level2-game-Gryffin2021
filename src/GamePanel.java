@@ -22,9 +22,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	bullet b = new bullet();
 	Font titleFont;
 	Font smallerFont;
+	Timer bulletSpawn;
 	Timer frameDraw; 
 	Player player = new Player(475, 500, 25, 25);
 	ObjectManager om = new ObjectManager(player);
+	static int bulletTime = 3000;
+	
 	
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -64,7 +67,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 	void drawEndState(Graphics g)  {  }
 	
-	 
+	void startGame() {
+		bulletSpawn = new Timer(bulletTime, om);
+		bulletSpawn.start();
+		if(currentState == END) {
+			bulletSpawn.stop();
+		}
+	}
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -74,6 +83,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		        currentState = MENU;
 		    } else {
 		        currentState++;
+		        startGame();
 		    }
 		}
 		    if(currentState == GAME) {
@@ -132,25 +142,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		    updateEndState();
 		}
 	}
-	//@Override
-	//public void mousePressed(MouseEvent e) {
-		
-	//}
-		/*System.out.println("a");
-		Projectile projectile = new Projectile(player.x, player.y);
-		projectile.x = player.x;
-		projectile.y = player.y;
-
-		int xdif = e.getX() - player.x;
-		int ydif = e.getY() - player.y;
-
-		double angle = Math.atan2((double) ydif, (double) xdif);
-
-		projectile.xSpeed = Math.cos(angle);
-		projectile.ySpeed = Math.sin(angle);
-		projectiles.add(projectile);
-	}*/
-
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
