@@ -9,7 +9,10 @@ public class ObjectManager implements ActionListener {
 	ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
 	ArrayList<enemyBullet> EBs = new ArrayList<enemyBullet>();
 	Random random = new Random();
-
+	Random direction = new Random();
+	Random speedA = new Random();
+	int d;
+	int s;
 	private Player player;
 	private static int score = 0;
 	
@@ -23,14 +26,29 @@ public class ObjectManager implements ActionListener {
 	}
 	
 	void addEBs() {
-		EBs.add(new enemyBullet(random.nextInt(1000), 0, 50, 50));
+		int d = direction.nextInt(4);
+		int s = speedA.nextInt(6);
+		if(d == 0) {
+			EBs.add(new enemyBullet(random.nextInt(1000), 0, 50, 50, d, s));
+		}else if(d == 1) {
+			EBs.add(new enemyBullet(random.nextInt(1000), 1000, 50, 50, d, s));
+		}else if(d == 2) {
+			EBs.add(new enemyBullet(0, random.nextInt(1000), 50, 50, d, s));
+		}else if(d == 3) {
+			EBs.add(new enemyBullet(1000, random.nextInt(1000), 50, 50, d, s));
+		}
 	}
 	
 	void checkCollision() {
-		
+		for (int i = 0; i < EBs.size(); i++) {
+			if(player.collisionBox.intersects(EBs.get(i).collisionBox)) {
+				
+			}
+		}
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
 				
-				}
+				
+		}
 			}
 
 
@@ -46,6 +64,7 @@ public class ObjectManager implements ActionListener {
 			for (int i1 = 0; i1 < EBs.size(); i1++) {
 				EBs.get(i1).update();
 		}
+			purgeObjects();
 	}
 
 	void draw(Graphics g) {
@@ -56,7 +75,20 @@ public class ObjectManager implements ActionListener {
 			EBs.get(i1).draw(g);
 		}
 	}
+	
+	void purgeObjects() {
+		for (int i = 0; i < EBs.size(); i++) {
+			if (EBs.get(i).isActive == false) {
+				EBs.remove(EBs.get(i));
+			}
 
+			for (int i1 = 0; i1 < projectiles.size(); i1++) {
+				if (projectiles.get(i1).isActive == false) {
+					projectiles.remove(projectiles.get(i1));
+				}
+			}
+		}
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

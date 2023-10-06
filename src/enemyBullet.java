@@ -5,15 +5,25 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 public class enemyBullet extends GameObject{
+	int d;
+	int speed;
 	
-	
-	enemyBullet(int x, int y, int width, int height) {
+	enemyBullet(int x, int y, int width, int height, int direction, int speed1) {
 		super(x, y, width, height);
-		speed = 5;
+		speed = speed1 + 5;
+		d = direction;
 	}
 	
 	void update() {
+		if(d == 0) {
 		y+=speed;
+		}else if(d == 1) {
+			y-=speed;
+		}else if(d == 2) {
+			x+=speed;
+		}else if(d == 3) {
+			x-=speed;
+		}
 		super.update();
 	}
 	

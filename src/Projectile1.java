@@ -15,7 +15,7 @@ double maxSpeed = 20;
 	}
 	
 	void draw(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.GREEN);
 		g.fillRect(x - width / 2, y - height / 2, width, height);
 	}
 }

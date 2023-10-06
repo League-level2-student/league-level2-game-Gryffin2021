@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Timer frameDraw; 
 	Player player = new Player(475, 500, 25, 25);
 	ObjectManager om = new ObjectManager(player);
-	static int bulletTime = 3000;
+	static int bulletTime = 200;
 	
 	
 	GamePanel(){
@@ -38,7 +38,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	
 	void updateMenuState() {  }
 	void updateGameState() {om.update();  
-	player.update();}
+	player.update(); if(player.isActive == false) {
+		currentState = END;
+	}
+	}
 	void updateEndState()  {  }
 	
 	@Override
