@@ -40,6 +40,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	void updateGameState() {om.update();  
 	player.update(); if(player.isActive == false) {
 		currentState = END;
+		if(player.y > 1000) {
+			player.down = false;
+		}
 	}
 	}
 	void updateEndState()  {  }
@@ -67,6 +70,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 	void drawGameState(Graphics g) { player.draw(g);
 	om.draw(g);
+	System.out.println(player.x + " " + player.y + " " + player.down);
+	if(player.y > 900){
+    	player.down = false;
+    }
+	if(player.y < 20) {
+		player.up = false;
+	}
+	if(player.x < 10) {
+		player.left = false;
+	}
+	if(player.x > 970) {
+		player.right = false;
+	}
 	}
 	void drawEndState(Graphics g)  {  }
 	
@@ -90,22 +106,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		    }
 		}
 		    if(currentState == GAME) {
-		    if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
+		    if (arg0.getKeyCode()==KeyEvent.VK_DOWN && player.y < 900) {
 		    	player.down = true;
+		    }else if(arg0.getKeyCode()==KeyEvent.VK_DOWN && player.y > 900){
+		    	player.down = false;
 		    }
-		    if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+		    if (arg0.getKeyCode()==KeyEvent.VK_UP && player.y > 20) {
 		    	player.up = true;
-		        player.up();
+		    }else if(arg0.getKeyCode()==KeyEvent.VK_UP && player.y < 20){
+		    	player.up = false;
 		    }
-		    if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
-		        System.out.println("LEFT");
+		    if (arg0.getKeyCode()==KeyEvent.VK_LEFT && player.x > 10) {
 		        player.left = true;
+		    }else if(arg0.getKeyCode()==KeyEvent.VK_LEFT && player.x < 10){
+		    	player.left = false;
 		    }
-		    if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
-		        System.out.println("RIGHT");
+		    if (arg0.getKeyCode()==KeyEvent.VK_RIGHT && player.x < 970) {
 		        player.right = true;
+		    }else if (arg0.getKeyCode()==KeyEvent.VK_RIGHT && player.x > 970) {
+		    	player.right = false;
 		    }
 		}
+	
 	}
 	
 

@@ -19,6 +19,7 @@ public class Player extends GameObject {
         x-=speed;
     }
  public void down() {
+	 if(y > 0)
         y+=speed;
     }
  public void up() {
