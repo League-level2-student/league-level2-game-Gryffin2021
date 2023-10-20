@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class bullet implements ActionListener {
+public class Bullet implements ActionListener {
 	class Player {
 		public int x;
 		public int y;
@@ -68,7 +68,7 @@ public class bullet implements ActionListener {
 	private ArrayList<Projectile> projectiles;
 	private Projectile projectile;
 
-	public bullet() {
+	public Bullet() {
 		//error here
 		
 	

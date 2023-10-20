@@ -14,10 +14,10 @@ public class GameObject {
 		 this.y = y;
 		 this.width = width;
 		 this.height = height;
-		 collisionBox = new Rectangle(x, y, width, height);
+		 collisionBox = new Rectangle(x, y, 15, 15);
 	 }
 	
 	void update(){
-		
+		collisionBox.setBounds(x, y, width, height);
 	}
 }

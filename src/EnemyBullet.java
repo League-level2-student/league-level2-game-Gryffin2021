@@ -4,11 +4,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-public class enemyBullet extends GameObject{
+public class EnemyBullet extends GameObject{
 	int d;
 	int speed;
 	
-	enemyBullet(int x, int y, int width, int height, int direction, int speed1) {
+	EnemyBullet(int x, int y, int width, int height, int direction, int speed1) {
 		super(x, y, width, height);
 		speed = speed1 + 5;
 		d = direction;

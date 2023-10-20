@@ -19,31 +19,32 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	int currentState = MENU;
 	int currentBoundsX;
 	int currentBoundsY;
-	bullet b = new bullet();
+	Bullet b = new Bullet();
 	Font titleFont;
 	Font smallerFont;
 	Timer bulletSpawn;
 	Timer frameDraw; 
+	Timer score1;
 	Player player = new Player(475, 500, 25, 25);
 	ObjectManager om = new ObjectManager(player);
 	static int bulletTime = 200;
-	
+	int sscore = 0;
+	String ssscore = ("" + sscore);
 	
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		smallerFont = new Font("Arial", Font.PLAIN, 12);
 		frameDraw = new Timer(1000/60, this);
 		frameDraw.start();
+		score1 = new Timer(1000, this);
+		score1.start();
 	}
 	
 	void updateMenuState() {  }
 	void updateGameState() {om.update();  
 	player.update(); if(player.isActive == false) {
 		currentState = END;
-		if(player.y > 1000) {
-			player.down = false;
 		}
-	}
 	}
 	void updateEndState()  {  }
 	
@@ -83,6 +84,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	if(player.x > 970) {
 		player.right = false;
 	}
+	g.setFont(smallerFont);
+	String ssscore = ("" + sscore);
+	g.drawString(ssscore, 15, 15);
 	}
 	void drawEndState(Graphics g)  {  }
 	
@@ -158,6 +162,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+		if(arg0.getSource() == frameDraw) {
 		repaint();
 		if(currentState == MENU){
 		    updateMenuState();
@@ -165,6 +170,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		    updateGameState();
 		}else if(currentState == END){
 		    updateEndState();
+		}
+		}else if(arg0.getSource() == score1) {
+			sscore ++;
 		}
 	}
 	

@@ -7,7 +7,7 @@ import java.util.Random;
 public class ObjectManager implements ActionListener {
 	
 	ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
-	ArrayList<enemyBullet> EBs = new ArrayList<enemyBullet>();
+	ArrayList<EnemyBullet> EBs = new ArrayList<EnemyBullet>();
 	Random random = new Random();
 	Random direction = new Random();
 	Random speedA = new Random();
@@ -29,20 +29,21 @@ public class ObjectManager implements ActionListener {
 		int d = direction.nextInt(4);
 		int s = speedA.nextInt(6);
 		if(d == 0) {
-			EBs.add(new enemyBullet(random.nextInt(1000), 0, 50, 50, d, s));
+			EBs.add(new EnemyBullet(random.nextInt(1000), 0, 50, 50, d, s));
 		}else if(d == 1) {
-			EBs.add(new enemyBullet(random.nextInt(1000), 1000, 50, 50, d, s));
+			EBs.add(new EnemyBullet(random.nextInt(1000), 1000, 50, 50, d, s));
 		}else if(d == 2) {
-			EBs.add(new enemyBullet(0, random.nextInt(1000), 50, 50, d, s));
+			EBs.add(new EnemyBullet(0, random.nextInt(1000), 50, 50, d, s));
 		}else if(d == 3) {
-			EBs.add(new enemyBullet(1000, random.nextInt(1000), 50, 50, d, s));
+			EBs.add(new EnemyBullet(1000, random.nextInt(1000), 50, 50, d, s));
 		}
 	}
 	
 	void checkCollision() {
 		for (int i = 0; i < EBs.size(); i++) {
 			if(player.collisionBox.intersects(EBs.get(i).collisionBox)) {
-				
+				player.isActive = false;
+				EBs.get(i).isActive = false;
 			}
 		}
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
