@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Timer bulletSpawn;
 	Timer frameDraw; 
 	Timer score1;
-	Player player = new Player(475, 500, 25, 25);
+	Player player = new Player(475, 850, 25, 25);
 	ObjectManager om = new ObjectManager(player);
 	static int bulletTime = 200;
 	int sscore = 0;

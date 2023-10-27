@@ -8,6 +8,7 @@ public class ObjectManager implements ActionListener {
 	
 	ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
 	ArrayList<EnemyBullet> EBs = new ArrayList<EnemyBullet>();
+	Boss boss = new Boss(450, 250, 100, 100);
 	Random random = new Random();
 	Random direction = new Random();
 	Random speedA = new Random();
@@ -40,6 +41,7 @@ public class ObjectManager implements ActionListener {
 	}
 	
 	void checkCollision() {
+		//note for error: function may not be getting called
 		for (int i = 0; i < EBs.size(); i++) {
 			if(player.collisionBox.intersects(EBs.get(i).collisionBox)) {
 				player.isActive = false;
@@ -50,6 +52,11 @@ public class ObjectManager implements ActionListener {
 				
 				
 		}
+			if(player.collisionBox.intersects(boss.collisionBox)) {
+				System.out.println("test");
+				player.isActive = false;
+				boss.isActive = false;
+			}
 			}
 
 
@@ -75,6 +82,7 @@ public class ObjectManager implements ActionListener {
 		for (int i1 = 0; i1 < EBs.size(); i1++) {
 			EBs.get(i1).draw(g);
 		}
+		boss.draw(g);
 	}
 	
 	void purgeObjects() {
