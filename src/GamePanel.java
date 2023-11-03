@@ -19,14 +19,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	int currentState = MENU;
 	int currentBoundsX;
 	int currentBoundsY;
-	Bullet b = new Bullet();
 	Font titleFont;
 	Font smallerFont;
 	Timer bulletSpawn;
 	Timer frameDraw; 
 	Timer score1;
-	Player player = new Player(475, 850, 25, 25);
-	ObjectManager om = new ObjectManager(player);
+	static Player player = new Player(475, 850, 25, 25);
+	ObjectManager om = new ObjectManager();
 	static int bulletTime = 200;
 	int sscore = 0;
 	String ssscore = ("" + sscore);
@@ -41,8 +40,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 	
 	void updateMenuState() {  }
-	void updateGameState() {om.update();  
-	player.update(); if(player.isActive == false) {
+	void updateGameState() {
+		om.update();  
+	player.update(); 
+	if(player.isActive == false) {
 		currentState = END;
 		}
 	}
@@ -69,7 +70,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.drawString("Press ENTER to begin...", 178, 300);
 		g.drawString("Press SPACE for instructions", 163, 400);
 	}
-	void drawGameState(Graphics g) { player.draw(g);
+	void drawGameState(Graphics g) { 
+		player.draw(g);
 	om.draw(g);
 	System.out.println(player.x + " " + player.y + " " + player.down);
 	if(player.y > 900){
@@ -201,11 +203,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		System.out.println("test2");
 				
-				Projectile1 projectile = new Projectile1(player.x, player.y);
-				projectile.x = player.x;
-				projectile.y = player.y;
+				Bullet projectile = new Bullet(player.x, player.y);
 
 				int xdif = e.getX() - player.x;
 				int ydif = e.getY() - player.y;

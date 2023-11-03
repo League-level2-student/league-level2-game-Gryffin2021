@@ -8,13 +8,15 @@ import javax.swing.Timer;
 
 public class Boss extends GameObject implements ActionListener{
 Timer move;
-int health = 100;
 int close1;
 Random ran;
 int bossWidth = 100;
 int bossHeight = 100;
+int health = 5;
 	public Boss(int x, int y, int width, int height) {
 		super(x, y, width, height);
+		width = 100;
+		height = 100;
 		bossWidth = width;
 		bossHeight = height;
 		// TODO Auto-generated constructor stub
@@ -26,6 +28,8 @@ int bossHeight = 100;
 	void draw(Graphics g) {
 		g.setColor(Color.RED);
 		g.drawRect(x, y, width, height);
+		g.setColor(Color.GREEN);
+        g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
 	
 	void update() {
@@ -44,6 +48,8 @@ int bossHeight = 100;
 		if(dist > 150) {
 			x = rx;
 			y = ry;
+			collisionBox.x = x;
+			collisionBox.y = y;
 		}else {
 			moveBoss();
 		}

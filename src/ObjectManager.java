@@ -6,23 +6,18 @@ import java.util.Random;
 
 public class ObjectManager implements ActionListener {
 	
-	ArrayList<Projectile1> projectiles = new ArrayList<Projectile1>();
+	ArrayList<Bullet> projectiles = new ArrayList<Bullet>();
 	ArrayList<EnemyBullet> EBs = new ArrayList<EnemyBullet>();
 	Boss boss = new Boss(450, 250, 100, 100);
 	Random random = new Random();
 	Random direction = new Random();
 	Random speedA = new Random();
+	int currentDamage = 1;
 	int d;
 	int s;
-	private Player player;
 	private static int score = 0;
 	
-
-	ObjectManager(Player player) {
-		this.player = player;
-	}
-
-	void addProjectile(Projectile1 projectile) {
+	void addProjectile(Bullet projectile) {
 		projectiles.add(projectile);
 	}
 	
@@ -43,18 +38,23 @@ public class ObjectManager implements ActionListener {
 	void checkCollision() {
 		//note for error: function may not be getting called
 		for (int i = 0; i < EBs.size(); i++) {
-			if(player.collisionBox.intersects(EBs.get(i).collisionBox)) {
-				player.isActive = false;
+			if(GamePanel.player.collisionBox.intersects(EBs.get(i).collisionBox)) {
+				GamePanel.player.isActive = false;
 				EBs.get(i).isActive = false;
 			}
 		}
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
-				
-				
+				if(boss.collisionBox.intersects(projectiles.get(i1).collisionBox)) {
+					boss.health -= currentDamage;
+					projectiles.get(i1).isActive = false;
+					if(boss.health == 0) {
+						boss.isActive = false;
+					}
+				}
 		}
-			if(player.collisionBox.intersects(boss.collisionBox)) {
+			if(GamePanel.player.collisionBox.intersects(boss.collisionBox)) {
 				System.out.println("test");
-				player.isActive = false;
+				GamePanel.player.isActive = false;
 				boss.isActive = false;
 			}
 			}
@@ -90,11 +90,10 @@ public class ObjectManager implements ActionListener {
 			if (EBs.get(i).isActive == false) {
 				EBs.remove(EBs.get(i));
 			}
-
-			for (int i1 = 0; i1 < projectiles.size(); i1++) {
-				if (projectiles.get(i1).isActive == false) {
-					projectiles.remove(projectiles.get(i1));
-				}
+		}
+		for (int i1 = 0; i1 < projectiles.size(); i1++) {
+			if (projectiles.get(i1).isActive == false) {
+				projectiles.remove(projectiles.get(i1));
 			}
 		}
 	}

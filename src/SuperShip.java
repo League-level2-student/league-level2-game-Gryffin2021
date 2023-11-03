@@ -7,7 +7,6 @@ public class SuperShip {
 	public static final int HEIGHT = 1000;
 	public static void main(String[] args) {
 		SuperShip player = new SuperShip();
-		new Bullet();
 		player.setup();
 	}	
 	SuperShip() {
