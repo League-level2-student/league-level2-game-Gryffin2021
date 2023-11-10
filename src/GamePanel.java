@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-
+//check bullet spawn
 public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener{
 	final int MENU = 0;
 	final int GAME = 1;
@@ -93,11 +93,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	void drawEndState(Graphics g)  {  }
 	
 	void startGame() {
+		om.boss.isActive = true;
+		om.boss.health = 500;
+		om.EBs.clear();
+		player.isActive = true;
 		bulletSpawn = new Timer(bulletTime, om);
 		bulletSpawn.start();
-		if(currentState == END) {
-			bulletSpawn.stop();
-		}
+		score1.start();
 	}
 	
 	@Override
@@ -108,6 +110,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		        currentState = MENU;
 		    } else {
 		        currentState++;
+		        bulletSpawn.stop();
+		        score1.stop();
 		        startGame();
 		    }
 		}

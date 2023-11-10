@@ -1,4 +1,6 @@
+//cool worm
 import java.awt.Graphics;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,18 +27,17 @@ public class ObjectManager implements ActionListener {
 		int d = direction.nextInt(4);
 		int s = speedA.nextInt(6);
 		if(d == 0) {
-			EBs.add(new EnemyBullet(random.nextInt(1000), 0, 50, 50, d, s));
+			EBs.add(new EnemyBullet(random.nextInt(1000), 0, d, s));
 		}else if(d == 1) {
-			EBs.add(new EnemyBullet(random.nextInt(1000), 1000, 50, 50, d, s));
+			EBs.add(new EnemyBullet(random.nextInt(1000), 1000, d, s));
 		}else if(d == 2) {
-			EBs.add(new EnemyBullet(0, random.nextInt(1000), 50, 50, d, s));
+			EBs.add(new EnemyBullet(0, random.nextInt(1000), d, s));
 		}else if(d == 3) {
-			EBs.add(new EnemyBullet(1000, random.nextInt(1000), 50, 50, d, s));
+			EBs.add(new EnemyBullet(1000, random.nextInt(1000), d, s));
 		}
 	}
 	
 	void checkCollision() {
-		//note for error: function may not be getting called
 		for (int i = 0; i < EBs.size(); i++) {
 			if(GamePanel.player.collisionBox.intersects(EBs.get(i).collisionBox)) {
 				GamePanel.player.isActive = false;
@@ -46,8 +47,9 @@ public class ObjectManager implements ActionListener {
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
 				if(boss.collisionBox.intersects(projectiles.get(i1).collisionBox)) {
 					boss.health -= currentDamage;
+					System.out.println("Hit");
 					projectiles.get(i1).isActive = false;
-					if(boss.health == 0) {
+					if(boss.health <= 0) {
 						boss.isActive = false;
 					}
 				}
@@ -56,6 +58,11 @@ public class ObjectManager implements ActionListener {
 				System.out.println("test");
 				GamePanel.player.isActive = false;
 				boss.isActive = false;
+			}
+			for (int i = 0; i < EBs.size(); i++) {
+				if(boss.collisionBox.intersects(EBs.get(i).collisionBox)) {
+					EBs.get(i).isActive = false;
+				}
 			}
 			}
 

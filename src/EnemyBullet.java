@@ -8,9 +8,10 @@ public class EnemyBullet extends GameObject{
 	int d;
 	int speed;
 	
-	EnemyBullet(int x, int y, int width, int height, int direction, int speed1) {
-		super(x, y, width, height);
-		speed = speed1 + 5;
+	
+	EnemyBullet(int x, int y, int direction, int speed1) {
+		super(x, y, 15, 15);
+		speed = speed1 + 3;
 		d = direction;
 	}
 	
@@ -29,6 +30,6 @@ public class EnemyBullet extends GameObject{
 	
 	void draw(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect(x, y, 5, 10);
+		g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
 }

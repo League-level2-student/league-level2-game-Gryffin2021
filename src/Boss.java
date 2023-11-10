@@ -12,7 +12,7 @@ int close1;
 Random ran;
 int bossWidth = 100;
 int bossHeight = 100;
-int health = 5;
+int health = 500;
 	public Boss(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		width = 100;
@@ -42,6 +42,7 @@ int health = 5;
 		move.restart();
 	}
 	public void moveBoss() {
+		if(isActive == true) {
 		int rx = ran.nextInt(1000);
 		int ry = ran.nextInt(1000);
 		double dist = Math.sqrt(Math.pow(rx - Player.xx, 2) - Math.pow(ry - Player.yy, 2));
@@ -53,5 +54,6 @@ int health = 5;
 		}else {
 			moveBoss();
 		}
+	}
 	}
 }
