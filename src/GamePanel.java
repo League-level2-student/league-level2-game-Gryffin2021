@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		frameDraw = new Timer(1000/60, this);
 		frameDraw.start();
 		score1 = new Timer(1000, this);
-		score1.start();
+		bulletSpawn = new Timer(bulletTime, om);
 	}
 	
 	void updateMenuState() {  }
@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.fillRect(0, 0, 1000, 1000);  
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
-		g.drawString("SUPER SHIP 199", 25, 200);
+		g.drawString("[Place Holder Menu]", 25, 200);
 		g.setFont(smallerFont);
 		g.drawString("Press ENTER to begin...", 178, 300);
 		g.drawString("Press SPACE for instructions", 163, 400);
@@ -90,15 +90,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	String ssscore = ("" + sscore);
 	g.drawString(ssscore, 15, 15);
 	}
-	void drawEndState(Graphics g)  {  }
+	void drawEndState(Graphics g)  {System.out.println("End");  }
 	
 	void startGame() {
 		om.boss.isActive = true;
 		om.boss.health = 500;
 		om.EBs.clear();
 		player.isActive = true;
-		bulletSpawn = new Timer(bulletTime, om);
 		bulletSpawn.start();
+		sscore = 0;
 		score1.start();
 	}
 	
@@ -111,7 +111,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		    } else {
 		        currentState++;
 		        bulletSpawn.stop();
-		        score1.stop();
 		        startGame();
 		    }
 		}

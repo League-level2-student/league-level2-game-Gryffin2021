@@ -57,7 +57,6 @@ public class ObjectManager implements ActionListener {
 			if(GamePanel.player.collisionBox.intersects(boss.collisionBox)) {
 				System.out.println("test");
 				GamePanel.player.isActive = false;
-				boss.isActive = false;
 			}
 			for (int i = 0; i < EBs.size(); i++) {
 				if(boss.collisionBox.intersects(EBs.get(i).collisionBox)) {
