@@ -10,12 +10,25 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Area;
+import java.io.File;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 //check bullet spawn
 public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener{
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
+	final int PAUSE = 3;
+	final int GUIDE = 4;
+	final int CREDITS = 5;
 	int currentState = MENU;
 	int currentBoundsX;
 	int currentBoundsY;
@@ -57,6 +70,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			drawGameState(g);
 		}else if(currentState == END){
 			drawEndState(g);
+		}else if(currentState == PAUSE) {
+			drawPauseState(g);
+		}else if(currentState == GUIDE) {
+			drawGuideState(g);
+		}else if(currentState == CREDITS) {
+			drawCreditsState(g);
 		}
 	}
 	
@@ -69,6 +88,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.setFont(smallerFont);
 		g.drawString("Press ENTER to begin...", 178, 300);
 		g.drawString("Press SPACE for instructions", 163, 400);
+		g.drawString("Press SHIFT for credits", 178, 500);
+	}
+	void drawGuideState(Graphics g) {
+		g.setColor(Color.CYAN);
+		g.fillRect(0, 0, 1000, 1000); 
 	}
 	void drawGameState(Graphics g) { 
 		player.draw(g);
@@ -90,13 +114,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	String ssscore = ("" + sscore);
 	g.drawString(ssscore, 15, 15);
 	}
-	void drawEndState(Graphics g)  {System.out.println("End");  }
-	
+	void drawPauseState(Graphics g)  {
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 0, 1000, 1000); 
+	}
+	void drawEndState(Graphics g)  {
+		g.setColor(Color.RED);
+		g.fillRect(0, 0, 1000, 1000); 
+	}
+	void drawCreditsState(Graphics g) {
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, 1000, 1000); 
+	}
 	void startGame() {
 		om.boss.isActive = true;
 		om.boss.health = 500;
+		om.boss.x = 450;
+		om.boss.y = 500;
 		om.EBs.clear();
 		player.isActive = true;
+		player.x = 500;
+		player.y = 800;
 		bulletSpawn.start();
 		sscore = 0;
 		score1.start();
@@ -107,12 +145,38 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		// TODO Auto-generated method stub
 		if (arg0.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
+		    	playSound("stateChange.wav");
 		        currentState = MENU;
-		    } else {
+		    }else if(currentState == GAME){
+		    	playSound("stateChange.wav");
+		    	currentState = PAUSE;
+		    }else if(currentState == PAUSE){
+		    	playSound("stateChange.wav");
+			    	currentState = GAME;
+		    }else if (currentState == MENU){
+		    	playSound("stateChange.wav");
 		        currentState++;
 		        bulletSpawn.stop();
 		        startGame();
 		    }
+		}
+		if (arg0.getKeyCode()==KeyEvent.VK_SPACE) {
+			if(currentState == MENU) {
+				playSound("stateChange.wav");
+				currentState = GUIDE;
+			}else if(currentState == GUIDE) {
+				playSound("stateChange.wav");
+				currentState = MENU;
+			}
+		}
+		if (arg0.getKeyCode()==KeyEvent.VK_SHIFT) {
+			if(currentState == MENU) {
+				playSound("stateChange.wav");
+				currentState = CREDITS;
+			}else if(currentState == CREDITS) {
+				playSound("stateChange.wav");
+				currentState = MENU;
+			}
 		}
 		    if(currentState == GAME) {
 		    if (arg0.getKeyCode()==KeyEvent.VK_DOWN && player.y < 900) {
@@ -206,8 +270,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("test2");
-				
 				Bullet projectile = new Bullet(player.x, player.y);
 
 				int xdif = e.getX() - player.x;
@@ -218,7 +280,30 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 				projectile.xSpeed = Math.cos(angle);
 				projectile.ySpeed = Math.sin(angle);
 				om.addProjectile(projectile);
+				if(currentState == GAME) {
+					playSound("fire_player.aiff");
+				}
+			}
+	public void playSound(String soundFile) {
+		String path = "src/";
+			File sound = new File(path+soundFile);
+			if (sound.exists()) {
+				new Thread(() -> {
+				try {
+					Clip clip = AudioSystem.getClip();
+					clip.open(AudioSystem.getAudioInputStream(sound));
+					clip.start();
+					Thread.sleep(clip.getMicrosecondLength()/1000);
+				}
+				catch (Exception e) {
+					System.out.println("Could not play this sound");
+				}}).start();
+	 		}
+			else {
+				System.out.println("File does not exist");
 			}
 	}
+}
 
+	
 

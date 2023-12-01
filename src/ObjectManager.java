@@ -18,7 +18,6 @@ public class ObjectManager implements ActionListener {
 	int d;
 	int s;
 	private static int score = 0;
-	
 	void addProjectile(Bullet projectile) {
 		projectiles.add(projectile);
 	}
@@ -47,7 +46,6 @@ public class ObjectManager implements ActionListener {
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
 				if(boss.collisionBox.intersects(projectiles.get(i1).collisionBox)) {
 					boss.health -= currentDamage;
-					System.out.println("Hit");
 					projectiles.get(i1).isActive = false;
 					if(boss.health <= 0) {
 						boss.isActive = false;
