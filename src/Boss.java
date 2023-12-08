@@ -12,7 +12,7 @@ int close1;
 Random ran;
 int bossWidth = 100;
 int bossHeight = 100;
-int health = 500;
+int health = 5;
 	public Boss(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		width = 100;

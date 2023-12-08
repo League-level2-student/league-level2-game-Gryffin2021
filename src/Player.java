@@ -33,7 +33,6 @@ public class Player extends GameObject {
         g.fillRect(x, y, 25, 25);
         g.setColor(Color.GREEN);
         g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
-        
 	}
 	
 	void update() {

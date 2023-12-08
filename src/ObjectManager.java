@@ -39,21 +39,24 @@ public class ObjectManager implements ActionListener {
 	void checkCollision() {
 		for (int i = 0; i < EBs.size(); i++) {
 			if(GamePanel.player.collisionBox.intersects(EBs.get(i).collisionBox)) {
+				GamePanel.playSound("gameover.wav");
 				GamePanel.player.isActive = false;
 				EBs.get(i).isActive = false;
 			}
 		}
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
 				if(boss.collisionBox.intersects(projectiles.get(i1).collisionBox)) {
-					boss.health -= currentDamage;
+					boss.health -- ;
+					GamePanel.playSound("hit.wav");
 					projectiles.get(i1).isActive = false;
 					if(boss.health <= 0) {
+						System.out.println("id");
 						boss.isActive = false;
 					}
 				}
 		}
 			if(GamePanel.player.collisionBox.intersects(boss.collisionBox)) {
-				System.out.println("test");
+				GamePanel.playSound("gameover.wav");
 				GamePanel.player.isActive = false;
 			}
 			for (int i = 0; i < EBs.size(); i++) {
