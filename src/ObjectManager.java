@@ -46,11 +46,10 @@ public class ObjectManager implements ActionListener {
 		}
 			for(int i1 = 0; i1 < projectiles.size(); i1++) {
 				if(boss.collisionBox.intersects(projectiles.get(i1).collisionBox)) {
-					boss.health -- ;
+					boss.health -= 100;
 					GamePanel.playSound("hit.wav");
 					projectiles.get(i1).isActive = false;
 					if(boss.health <= 0) {
-						System.out.println("id");
 						boss.isActive = false;
 					}
 				}

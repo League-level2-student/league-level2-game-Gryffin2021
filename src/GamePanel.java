@@ -13,8 +13,10 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Area;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
@@ -44,6 +46,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	int sscore = 0;
 	String ssscore = ("" + sscore);
 	Timer deathwait;
+	Timer winwait;
+	Timer soundwait;
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;
+	public static boolean flawless = true;
 	
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -53,6 +61,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		score1 = new Timer(1000, this);
 		bulletSpawn = new Timer(bulletTime, om);
 		deathwait = new Timer(3000, this);
+		winwait = new Timer(3000, this);
+		soundwait = new Timer(1, this);
 	}
 	
 	void updateMenuState() {  }
@@ -60,7 +70,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		om.update();  
 	player.update(); 
 	if(om.boss.health <= 0) {
-		currentState = WIN;
+		soundwait.start();
+		player.isActive = true;
+		bulletSpawn.stop();
+		winwait.start();
 	}
 	if(player.isActive == false) {
 		deathwait.start();
@@ -260,6 +273,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		}else if(arg0.getSource() == deathwait) {
 			deathwait.stop();
 			currentState = END;
+		}else if(arg0.getSource() == winwait) {
+			winwait.stop();
+			currentState = WIN;
+			playSound("win.wav");
+		}
+		else if(arg0.getSource() == soundwait) {
+			soundwait.stop();
+			playSound("bossdeath.wav");
 		}
 	}
 	
@@ -322,6 +343,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			else {
 				System.out.println("File does not exist");
 			}
+	}
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
 	}
 }
 
