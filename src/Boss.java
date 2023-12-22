@@ -33,13 +33,13 @@ public static boolean flawless = true;
 		ran = new Random();
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		if (needImage) {
-		    loadImage ("");
+		    loadImage ("boss.png");
 		}
 	}
 	
 	void draw(Graphics g) {
 		if (gotImage) {
-        	g.drawImage(image, x, y, 50, 50, null);
+        	g.drawImage(image, x, y, 100, 100, null);
        } else {
 		g.setColor(Color.RED);
 		g.drawRect(x, y, width, height);
