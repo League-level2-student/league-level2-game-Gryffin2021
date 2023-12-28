@@ -33,7 +33,7 @@ public static boolean flawless = true;
 		ran = new Random();
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		if (needImage) {
-		    loadImage ("boss.png");
+		    loadImage ("bossship.png");
 		}
 	}
 	
