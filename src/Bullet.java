@@ -10,11 +10,11 @@ public static BufferedImage image;
 public static boolean needImage = true;
 public static boolean gotImage = false;
 	Bullet(int x, int y) {
-		super(x, y, 5, 10);
+		super(x, y, 20, 20);
 		// TODO Auto-generated constructor stub
 		speed = 10;
 		if (needImage) {
-		    loadImage ("bullet.png");
+		    loadImage ("playerbullet.png");
 		}
 	}
 	
@@ -26,7 +26,7 @@ public static boolean gotImage = false;
 	
 	void draw(Graphics g) {
 		if (gotImage) {
-        	g.drawImage(image, x, y, 10, 10, null);
+        	g.drawImage(image, x, y, 20, 20, null);
        } else {
 		g.setColor(Color.GREEN);
 		g.fillRect(x - width / 2, y - height / 2, width, height);

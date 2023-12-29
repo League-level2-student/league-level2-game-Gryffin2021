@@ -59,6 +59,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	BufferedImage bg1;
 	BufferedImage bg2;
 	BufferedImage bg3;
+	BufferedImage deadplayer;
+	BufferedImage deadboss;
 	
 
 	GamePanel() {
@@ -72,9 +74,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		winwait = new Timer(3000, this);
 		soundwait = new Timer(1, this);
 		ran = new Random();
-		bg1 = loadImage("gamescene1.png");
-		bg2 = loadImage("gamescene2.png");
-		bg3 = loadImage("gamescene3.png");
+		bg1 = loadImage("htrae.png");
+		bg2 = loadImage("noom eht.png");
+		bg3 = loadImage("???.png");
+		deadplayer = loadImage("playerdeath.png");
+		deadboss = loadImage("bossdeath.png");
 	}
 
 	void updateMenuState() {
@@ -139,8 +143,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		} else if (billy == 2) {
 			g.drawImage(bg3, 0, 0, 1000, 1000, null);
 		}
+		if (player.isActive == false) {
+			g.drawImage(deadplayer, player.x, player.y, 50, 50, null);
+		}else {
 		player.draw(g);
+		}
+		if (om.boss.health > 0) {
 		om.draw(g);
+		}else if (om.boss.health <= 0) {
+			g.drawImage(deadboss, om.boss.x, om.boss.y, 100, 100, null);
+		}
 		if (player.y > 900) {
 			player.down = false;
 		}
@@ -210,7 +222,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			} else if (currentState == MENU) {
 				playSound("stateChange.wav");
 				currentState++;
-				billy = ran.nextInt(2);
+				billy = ran.nextInt(3);
 				bulletSpawn.stop();
 				startGame();
 			} else if (currentState == WIN) {
