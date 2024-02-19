@@ -61,7 +61,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	BufferedImage bg3;
 	BufferedImage deadplayer;
 	BufferedImage deadboss;
-	
+	BufferedImage menu;
+	BufferedImage pause;
+	BufferedImage win;
+	BufferedImage lose;
+	BufferedImage credit;
+	BufferedImage guide;
 
 	GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -79,6 +84,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		bg3 = loadImage("???.png");
 		deadplayer = loadImage("playerdeath.png");
 		deadboss = loadImage("bossdeath.png");
+		menu = loadImage("menu.jpeg");
+		pause = loadImage("pause proper.jpeg");
+		win = loadImage("you win proper.jpeg");
+		lose = loadImage("you lost, proper one.jpeg");
+		credit = loadImage("credits proper.jpeg");
+		guide = loadImage("guide.png");
 	}
 
 	void updateMenuState() {
@@ -119,20 +130,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 
 	void drawMenuState(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, 1000, 1000);
-		g.setFont(titleFont);
-		g.setColor(Color.YELLOW);
-		g.drawString("[Place Holder Menu]", 25, 200);
-		g.setFont(smallerFont);
-		g.drawString("Press ENTER to begin...", 178, 300);
-		g.drawString("Press SPACE for instructions", 163, 400);
-		g.drawString("Press SHIFT for credits", 178, 500);
+		g.drawImage(menu, 0, 0, 1000, 900, null);
 	}
 
 	void drawGuideState(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.fillRect(0, 0, 1000, 1000);
+		g.drawImage(guide, 0, 0, 1000, 900, null);
 	}
 
 	void drawGameState(Graphics g) {
@@ -171,23 +173,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 
 	void drawPauseState(Graphics g) {
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 0, 1000, 1000);
+		g.drawImage(pause, 0, 0, 1000, 1000, null);
 	}
 
 	void drawEndState(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillRect(0, 0, 1000, 1000);
+		g.drawImage(lose, 0, 0, 1000, 1000, null);
 	}
 
 	void drawWinState(Graphics g) {
-		g.setColor(Color.YELLOW);
-		g.fillRect(0, 0, 1000, 1000);
+		g.drawImage(win, 0, 0, 1000, 1000, null);
 	}
 
 	void drawCreditsState(Graphics g) {
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 0, 1000, 1000);
+		g.drawImage(credit, 0, 0, 1000, 1000, null);
 	}
 
 	void startGame() {
